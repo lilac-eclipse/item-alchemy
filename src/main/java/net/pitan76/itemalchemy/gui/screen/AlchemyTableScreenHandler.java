@@ -327,14 +327,15 @@ public class AlchemyTableScreenHandler extends SimpleScreenHandler {
             ItemStack definedStack = extractSlot.inventory.definedStacks.get(slotIndex + 14);
             ItemStack stack = SlotUtil.getStack(extractSlot);
 
+            long adjustedEmcCost = 2 * EMCManager.get(definedStack);
+
             int receivable = 1;
             if (actionType == SlotActionType.QUICK_MOVE) {
-                receivable = (int) Math.min(Math.floorDiv(EMCManager.getEmcFromPlayer(player), EMCManager.get(definedStack)), definedStack.getMaxCount());
+                receivable = (int) Math.min(Math.floorDiv(EMCManager.getEmcFromPlayer(player), adjustedEmcCost), definedStack.getMaxCount());
             }
 
-
-            if (definedStack != null && stack.isEmpty() && EMCManager.getEmcFromPlayer(player) >= EMCManager.get(definedStack) * receivable) {
-                EMCManager.decrementEmc(player, EMCManager.get(definedStack) * receivable);
+            if (definedStack != null && stack.isEmpty() && EMCManager.getEmcFromPlayer(player) >= adjustedEmcCost * receivable) {
+                EMCManager.decrementEmc(player, adjustedEmcCost * receivable);
                 SlotUtil.setStack(extractSlot, definedStack.copy());
 
                 if (receivable > 1) {

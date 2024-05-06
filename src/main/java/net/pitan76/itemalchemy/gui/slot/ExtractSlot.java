@@ -22,7 +22,7 @@ public class ExtractSlot extends CompatibleSlot {
 
     @Override
     public boolean canTakeItems(PlayerEntity playerEntity) {
-        return EMCManager.getEmcFromPlayer(player) >= EMCManager.get(callGetStack().getItem()) && canTakeItem;
+        return EMCManager.getEmcFromPlayer(player) >= 2 * EMCManager.get(callGetStack().getItem()) && canTakeItem;
     }
 
     @Override
